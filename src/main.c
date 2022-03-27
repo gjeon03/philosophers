@@ -1,5 +1,20 @@
 #include "philo.h"
 
+int	check_argv(t_philo *philo)
+{
+	if (philo->philo_len <= 0)
+		return (1);
+	else if (philo->time_life <= 0)
+		return (1);
+	else if (philo->time_eat <= 0)
+		return (1);
+	else if (philo->time_sleep <= 0)
+		return (1);
+	else if (philo->end_flag < 0)
+		return (1);
+	return (0);
+}
+
 void	philo_init(char *argv[], t_philo *philo)
 {
 	philo->philo_len = ft_atoi(argv[1]);
@@ -20,6 +35,11 @@ int main(int argc, char *argv[])
 	}
 	philo_init(argv, &philo);
 
+	if (check_argv(&philo))
+	{
+		printf("check input\n");
+		return (1);
+	}
 	printf("philo_len = %d\n", philo.philo_len);
 	printf("time_life = %d\n", philo.time_life);
 	printf("time_eat = %d\n", philo.time_eat);
