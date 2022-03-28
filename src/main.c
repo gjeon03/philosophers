@@ -33,17 +33,18 @@ int main(int argc, char *argv[])
 
 	if (argc < 5 || 6 < argc)
 	{
-		ft_error("please input\n", &table);
+		ft_error("please input", &table);
 		return (1);
 	}
 	init(argc, argv, &table);
 	if (check_argv(&table))
 	{
-		ft_error("check input\n", &table);
+		ft_error("check input", &table);
 		return (1);
 	}
 	init_philos(&table);
-    init_mutex(&table);
+	init_mutex(&table);
+	init_thread(&table);
 
 	// printf("num_philo = %d\n", table.num_philo);
 	// printf("time_life = %d\n", table.time_life);

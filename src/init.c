@@ -7,10 +7,13 @@ void	init_mutex(t_table *table)
 	table->forks = (pthread_mutex_t *)malloc(sizeof(*(table->forks)) \
 	* table->num_philo);
 	if (!table->forks)
-		ft_error("Malloc error...", table);
+		ft_error("malloc error", table);
 	i = -1;
-	while (++i < table->num_philo)
+	while (++i < table->num_philo) {
 		pthread_mutex_init(&table->forks[i], NULL);
+		pthread_mutex_init(&table->write_m, NULL);
+		pthread_mutex_init(&table->dead_m, NULL);
+	}
 }
 
 void	init_philos(t_table *table)
@@ -31,6 +34,16 @@ void	init_philos(t_table *table)
 	}
 }
 
+void	init_thread(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->num_philo)
+		if (pthread_create(table->philos + i, NULL, make_actions, table->philos + i))
+			ft_error("Thread error", table);
+}
+
 int	init(int argc, char *argv[], t_table *table)
 {
 	table->num_philo = ft_atoi(argv[1]);
@@ -45,7 +58,7 @@ int	init(int argc, char *argv[], t_table *table)
 	table->philos = NULL;
 	table->philos = (t_philos *)malloc(sizeof(t_philos) * table->num_philo);
 	if (!table->philos) {
-		ft_error("malloc error\n", table);
+		ft_error("malloc error", table);
 		return (-1);
 	}
 	return (0);
