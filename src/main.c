@@ -4,7 +4,7 @@ int	check_argv(t_table *table)
 {
 	if (table->num_philo <= 0)
 		return (1);
-	else if (table->time_life <= 0)
+	else if (table->time_die <= 0)
 		return (1);
 	else if (table->time_eat <= 0)
 		return (1);
@@ -15,23 +15,35 @@ int	check_argv(t_table *table)
 	return (0);
 }
 
+void	free_table(t_table *table)
+{
+	if (!table)
+		;
+}
+
+void	ft_error(char *str, t_table *table)
+{
+	(void)table;
+	printf("%s\n", str);
+}
+
 int main(int argc, char *argv[])
 {
 	t_table	table;
 
 	if (argc < 5 || 6 < argc)
 	{
-		printf("please input\n");
+		ft_error("please input\n", &table);
 		return (1);
 	}
 	init(argc, argv, &table);
 	if (check_argv(&table))
 	{
-		printf("check input\n");
+		ft_error("check input\n", &table);
 		return (1);
 	}
-	init_philos(table);
-    init_mutex(table);
+	init_philos(&table);
+    init_mutex(&table);
 
 	// printf("num_philo = %d\n", table.num_philo);
 	// printf("time_life = %d\n", table.time_life);
