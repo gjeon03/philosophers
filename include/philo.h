@@ -9,16 +9,17 @@
 # include <string.h>
 # include <limits.h>
 
-typedef struct			s_philos
+typedef struct	s_philos
 {
-	int					is_eating;
-	int					fork_left;
-	int					fork_right;
-	int					eat_count;
-	int					pos;
-	t_table				*table;
-	unsigned long long	last_eat;
-}						t_philos;
+	pthread_mutex_t	mutex;
+	pthread_mutex_t	eat_m;
+	int 	start_eat;
+	int		pos;
+	int		fork_left;
+	int		fork_right;
+	int		eat_count;
+	t_data *data;
+}				t_philos;
 
 typedef struct			s_table {
 	int					num_philo; //철학자 수
@@ -28,12 +29,14 @@ typedef struct			s_table {
 	int					eat_count; //종료 카운트
 	int					is_dead;
 	t_philos			*philos;
-	pthread_mutex_t		*forks_m;
-	pthread_mutex_t		write_m;
-	pthread_mutex_t		end_m;
-	unsigned long long	start;
 }						t_table;
 
+//utiles
 int	ft_atoi(const char *str);
+
+//init
+void	init_mutex(t_table *table);
+void	init_philos(t_table *table);
+void	init(t_table *table);
 
 #endif

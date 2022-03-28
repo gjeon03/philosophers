@@ -1,6 +1,6 @@
 NAME = philo
 
-FILES = main ft_atoi
+FILES = main ft_atoi init
 
 CC = gcc
 RM = rm -f
