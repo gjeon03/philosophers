@@ -12,6 +12,7 @@ typedef struct s_table	t_table;
 
 typedef struct			s_philos
 {
+	int					last_eat;
 	int					start_eat;
 	int					pos;
 	int					fork_left;
@@ -19,26 +20,31 @@ typedef struct			s_philos
 	int					eat_count;
 	t_table				*table;
 	pthread_mutex_t		eat_m;
-	unsigned long long	start;
 }						t_philos;
 
-struct				s_table {
-	int				num_philo; //철학자 수
-	int				time_die; //생존 시간
-	int				time_eat; //먹는 시간
-	int				time_sleep; //자는 시간
-	int				eat_count; //종료 카운트
-	int				is_dead;
-	int				start;
-	t_philos		*philos;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	write_m;
-	pthread_mutex_t	dead_m;
+struct					s_table {
+	int					num_philo; //철학자 수
+	int					time_die; //생존 시간
+	int					time_eat; //먹는 시간
+	int					time_sleep; //자는 시간
+	int					eat_count; //종료 카운트
+	int					is_dead;
+	unsigned long long	start;
+	t_philos			*philos;
+	pthread_mutex_t		*forks_m;
+	pthread_mutex_t		write_m;
+	pthread_mutex_t		dead_m;
 };
 
 //utils
 int	ft_atoi(char *str);
 unsigned long long	get_time(void);
+void	ft_putchar(char c);
+void	ft_putstr(char *str);
+void	ft_putnbr(int nbr);
+
+//print
+void	ft_print(t_philos *philo, char *msg);
 
 //init
 void	init_thread(t_table *table);

@@ -1,5 +1,37 @@
 #include "philo.h"
 
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *str)
+{
+	int	i;
+
+	if (!str)
+		return ;
+	i = -1;
+	while (str[++i])
+		write(1, &str[i], 1);
+}
+
+void	ft_putnbr(int nbr)
+{
+	unsigned int	nb;
+
+	if (nbr < 0)
+	{
+		write(1, "-", 1);
+		nb = -nbr;
+	}
+	else
+		nb = nbr;
+	if (nbr > 9)
+		ft_putnbr(nbr / 10);
+	ft_putchar(nbr % 10 + '0');
+}
+
 unsigned long long	get_time(void)
 {
 	unsigned long long	res;
