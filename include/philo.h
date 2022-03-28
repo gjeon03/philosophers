@@ -12,14 +12,13 @@ typedef struct s_table	t_table;
 
 typedef struct			s_philos
 {
-	int					last_eat;
-	int					start_eat;
 	int					pos;
 	int					fork_left;
 	int					fork_right;
 	int					eat_count;
 	t_table				*table;
 	pthread_mutex_t		eat_m;
+	int					last_eat;
 }						t_philos;
 
 struct					s_table {
@@ -47,7 +46,7 @@ void	ft_putnbr(int nbr);
 void	ft_print(t_philos *philo, char *msg);
 
 //init
-void	init_thread(t_table *table);
+void	init_threads(t_table *table);
 void	init_mutex(t_table *table);
 void	init_philos(t_table *table);
 int		init(int argc, char *argv[], t_table *table);

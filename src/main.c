@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	}
 	init_philos(&table);
 	init_mutex(&table);
-	init_thread(&table);
+	init_threads(&table);
 
 	// printf("num_philo = %d\n", table.num_philo);
 	// printf("time_life = %d\n", table.time_life);
