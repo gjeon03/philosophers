@@ -23,7 +23,6 @@ void	init_philos(t_table *table)
 	i = -1;
 	while (++i < table->num_philo)
 	{
-		table->philos[i].start_eat = 0;
 		table->philos[i].pos = i;
 		table->philos[i].fork_left = i;
 		table->philos[i].fork_right = i + 1;
@@ -36,12 +35,14 @@ void	init_philos(t_table *table)
 
 void	init_thread(t_table *table)
 {
-	int	i;
+	int			i;
+	pthread_t	tid;
 
+	table->start = get_time();
 	i = -1;
 	while (++i < table->num_philo)
-		if (pthread_create(table->philos + i, NULL, make_actions, table->philos + i))
-			ft_error("Thread error", table);
+		if (pthread_create(&tid, NULL, make_actions, (void *)(table->philos + i)))
+			ft_error("Thread error...", table);
 }
 
 int	init(int argc, char *argv[], t_table *table)

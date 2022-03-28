@@ -1,5 +1,15 @@
 #include "philo.h"
 
+unsigned long long	get_time(void)
+{
+	unsigned long long	res;
+	struct timeval		time;
+
+	gettimeofday(&time, NULL);
+	res = time.tv_sec * 1000 + time.tv_usec / 1000;
+	return (res);
+}
+
 int	ft_atoi(char *str)
 {
 	int	sign;
