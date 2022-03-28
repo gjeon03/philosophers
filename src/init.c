@@ -15,6 +15,7 @@ void	init_mutex(t_table *table)
 	}
 	pthread_mutex_init(&table->write_m, NULL);
 	pthread_mutex_init(&table->dead_m, NULL);
+	pthread_mutex_lock(&table->dead_m);
 }
 
 void	init_philos(t_table *table)
@@ -25,6 +26,7 @@ void	init_philos(t_table *table)
 	while (++i < table->num_philo)
 	{
 		table->philos[i].pos = i;
+		table->philos[i].is_eating = 0;
 		table->philos[i].fork_left = i;
 		table->philos[i].fork_right = i + 1;
 		table->philos[i].eat_count = 0;
@@ -45,11 +47,8 @@ void	init_threads(t_table *table)
 		if (pthread_create(&tid, NULL, make_actions, (void *)(table->philos + i)))
 			ft_error("Thread error...", table);
 		usleep(100);
+		pthread_detach(tid);
 	}
-	i = -1;
-	while (++i < table->num_philo)
-		if (pthread_join(tid, NULL))
-			ft_error("Thread error...", table);
 }
 
 int	init(int argc, char *argv[], t_table *table)

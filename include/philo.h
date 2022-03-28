@@ -12,6 +12,7 @@ typedef struct s_table	t_table;
 
 typedef struct			s_philos
 {
+	int					is_eating;
 	int					pos;
 	int					fork_left;
 	int					fork_right;

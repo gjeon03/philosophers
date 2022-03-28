@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
 	init_mutex(&table);
 	init_threads(&table);
 
+	pthread_mutex_lock(&table.dead_m);
+	pthread_mutex_unlock(&table.dead_m);
+
 	// printf("num_philo = %d\n", table.num_philo);
 	// printf("time_life = %d\n", table.time_life);
 	// printf("time_eat = %d\n", table.time_eat);

@@ -11,10 +11,12 @@ void	make_sleep(t_philos *philo)
 void	make_eat(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->eat_m);
+	philo->is_eating = 1;
 	philo->last_eat = get_time();
 	ft_print(philo, " is eating\n");
 	philo->eat_count++;
 	usleep(1000 * philo->table->time_eat);
+	philo->is_eating = 0;
 	pthread_mutex_unlock(&philo->eat_m);
 }
 
@@ -26,17 +28,37 @@ void	take_forks(t_philos *philo)
 	ft_print(philo, " has taken a right fork\n");
 }
 
-void	*make_actions(void *philo_v)
+void	*dead(void *philo_v)
 {
-	// t_philos	*philo;
+	t_philos	*philo;
 
-	// philo = (t_philos *)philo_v;
+	philo = (t_philos *)philo_v;
 	while (1)
 	{
-		take_forks(philo_v);
-		make_eat(philo_v);
-		make_sleep(philo_v);
-		ft_print(philo_v, " is thinking\n");
+		if (!philo->is_eating && (int)get_time() > philo->last_eat + philo->table->time_die)
+		{
+			ft_print(philo, " died\n");
+			pthread_mutex_unlock(&philo->table->dead_m);
+		}
+		usleep(1000);
+	}
+}
+
+void	*make_actions(void *philo_v)
+{
+	t_philos	*philo;
+	pthread_t	tid;
+
+	philo = (t_philos *)philo_v;
+	philo->last_eat = philo->table->start;
+	if (pthread_create(&tid, NULL, &dead, philo_v))
+		return (NULL);
+	while (1)
+	{
+		take_forks(philo);
+		make_eat(philo);
+		make_sleep(philo);
+		ft_print(philo, " is thinking\n");
 		// make_think(philo);
 	}
 	return (NULL);
