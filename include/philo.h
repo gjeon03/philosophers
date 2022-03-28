@@ -33,7 +33,7 @@ struct					s_table {
 	t_philos			*philos;
 	pthread_mutex_t		*forks_m;
 	pthread_mutex_t		write_m;
-	pthread_mutex_t		dead_m;
+	pthread_mutex_t		end_m;
 };
 
 //utils

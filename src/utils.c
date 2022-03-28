@@ -65,4 +65,4 @@ int	ft_atoi(char *str)
 	if (str[i])
 		return (0);
 	return (res * sign);
-} 
+}

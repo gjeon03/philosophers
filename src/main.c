@@ -27,7 +27,7 @@ void	ft_error(char *str, t_table *table)
 	printf("%s\n", str);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_table	table;
 
@@ -45,14 +45,7 @@ int main(int argc, char *argv[])
 	init_philos(&table);
 	init_mutex(&table);
 	init_threads(&table);
-
-	pthread_mutex_lock(&table.dead_m);
-	pthread_mutex_unlock(&table.dead_m);
-
-	// printf("num_philo = %d\n", table.num_philo);
-	// printf("time_life = %d\n", table.time_life);
-	// printf("time_eat = %d\n", table.time_eat);
-	// printf("time_sleep = %d\n", table.time_sleep);
-	// printf("eat_count = %d\n", table.eat_count);
+	pthread_mutex_lock(&table.end_m);
+	pthread_mutex_unlock(&table.end_m);
 	return (0);
 }

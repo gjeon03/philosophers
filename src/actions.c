@@ -35,10 +35,11 @@ void	*dead(void *philo_v)
 	philo = (t_philos *)philo_v;
 	while (1)
 	{
-		if (!philo->is_eating && (int)get_time() > philo->last_eat + philo->table->time_die)
+		if (!philo->is_eating && \
+		getime() > philo->last_eat + philo->data->time_die)
 		{
 			ft_print(philo, " died\n");
-			pthread_mutex_unlock(&philo->table->dead_m);
+			pthread_mutex_unlock(&philo->table->end_m);
 		}
 		usleep(1000);
 	}
@@ -59,7 +60,6 @@ void	*make_actions(void *philo_v)
 		make_eat(philo);
 		make_sleep(philo);
 		ft_print(philo, " is thinking\n");
-		// make_think(philo);
 	}
 	return (NULL);
 }
