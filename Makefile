@@ -1,6 +1,6 @@
 NAME = philo
 
-FILES = main utils init actions ft_print
+FILES = main utils init actions utils2
 
 CC = gcc
 RM = rm -f

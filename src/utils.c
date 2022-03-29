@@ -1,45 +1,67 @@
 #include "philo.h"
 
-void	ft_putchar(char c)
+void	ft_print(t_philos *philo, char *msg, int is_dead, char *color)
 {
-	write(1, &c, 1);
+	static int	finish = 0;
+
+	pthread_mutex_lock(&philo->table->write_m);
+	if (!finish)
+	{
+		if (is_dead)
+			finish = 1;
+		if (is_dead == 2)
+			return ;
+		ft_putstr(ORANGE);
+		ft_putnbr(get_time() - philo->table->start);
+		write(1, "\t", 1);
+		ft_putstr(color);
+		ft_putnbr(philo->pos + 1);
+		write(1, " ", 1);
+		ft_putstr(msg);
+		ft_putstr(RESET);
+		if (is_dead)
+			return ;
+	}
+	pthread_mutex_unlock(&philo->table->write_m);
 }
 
-void	ft_putstr(char *str)
+void	destroy_forks(t_table *table)
 {
 	int	i;
 
-	if (!str)
-		return ;
 	i = -1;
-	while (str[++i])
-		write(1, &str[i], 1);
+	while (++i < table->num_philo)
+		pthread_mutex_destroy(&table->forks_m[i]);
 }
 
-void	ft_putnbr(int nbr)
+int	destroy_table(t_table *table)
 {
-	unsigned int	nb;
+	int	i;
 
-	if (nbr < 0)
-	{
-		write(1, "-", 1);
-		nb = -nbr;
-	}
-	else
-		nb = nbr;
-	if (nbr > 9)
-		ft_putnbr(nbr / 10);
-	ft_putchar(nbr % 10 + '0');
+	i = -1;
+	if (table->error_type == 1)
+		return (0);
+	else if (table->error_type == 2)
+		free(table->philos);
+	else if (table->error_type == 3)
+		free(table->forks_m);
+	else if (table->error_type == 4)
+		destroy_forks(table);
+	else if (table->error_type == 5)
+		pthread_mutex_destroy(&table->write_m);
+	else if (table->error_type == 6)
+		pthread_mutex_destroy(&table->end_m);
+	table->error_type--;
+	destroy_table(table);
+	return (0);
 }
 
-unsigned long long	get_time(void)
+uint64_t	get_time(void)
 {
-	unsigned long long	res;
 	struct timeval		time;
 
 	gettimeofday(&time, NULL);
-	res = time.tv_sec * 1000 + time.tv_usec / 1000;
-	return (res);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 int	ft_atoi(char *str)
