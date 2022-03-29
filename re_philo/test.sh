@@ -42,55 +42,55 @@ test_one ()
     rm -rf "./log_$1"
 }
 
-# test_two ()
-# {
-#     echo "\e[94m[+] Test #2: Executing your program for 60 second, please wait...\e[0m"
-#     ("$2/$1/$1" 4 410 200 200 > /dev/null)&
-#     i=1
-#     error=0
-#     while [ $i -lt 60 ];do
-#         printf "\r[%d...]" $i
-#         pgrep $1 > /dev/null
-#         if [ "$?" -ne 0 ];then
-#             echo "\r\e[91m[+] Test #2 Failed\e[0m"
-#             error_log $1 "Test #2" "Given 4 410 200 200 arguments to $1, no philosopher should die !"
-#             error=1
-#             break
-#         fi
-#         sleep 1
-#         i=$(( $i + 1 ))
-#     done
-#     sleep 1
-#     if [ $error -eq 0 ];then
-#         pkill $1
-#         echo "\r\e[92m[+] Test #2 Succeeded\e[0m"
-#     fi
-# }
+test_two ()
+{
+    echo "\e[94m[+] Test #2: Executing your program for 60 second, please wait...\e[0m"
+    ("$2/$1/$1" 4 410 200 200 > /dev/null)&
+    i=1
+    error=0
+    while [ $i -lt 60 ];do
+        printf "\r[%d...]" $i
+        pgrep $1 > /dev/null
+        if [ "$?" -ne 0 ];then
+            echo "\r\e[91m[+] Test #2 Failed\e[0m"
+            error_log $1 "Test #2" "Given 4 410 200 200 arguments to $1, no philosopher should die !"
+            error=1
+            break
+        fi
+        sleep 1
+        i=$(( $i + 1 ))
+    done
+    sleep 1
+    if [ $error -eq 0 ];then
+        pkill $1
+        echo "\r\e[92m[+] Test #2 Succeeded\e[0m"
+    fi
+}
 
-# test_three ()
-# {
-#     echo "\e[94m[+] Test #3: Executing your program for 60 second, please wait...\e[0m"
-#     ("$2/$1/$1" 5 800 200 200 > /dev/null)&
-#     i=1
-#     error=0
-#     while [ $i -lt 60 ];do
-#         printf "\r[%d...]" $i
-#         pgrep $1 > /dev/null
-#         if [ "$?" -ne 0 ];then
-#             echo "\r\e[91m[+] Test #3 Failed\e[0m"
-#             error_log $1 "Test #3" "Given 4 800 200 200 arguments to $1, no philosopher should die !"
-#             error=1
-#             break
-#         fi
-#         sleep 1
-#         i=$(( $i + 1 ))
-#     done
-#     sleep 1
-#     if [ $error -eq 0 ];then
-#         pkill $1
-#         echo "\r\e[92m[+] Test #3 Succeeded\e[0m"
-#     fi
-# }
+test_three ()
+{
+    echo "\e[94m[+] Test #3: Executing your program for 60 second, please wait...\e[0m"
+    ("$2/$1/$1" 5 800 200 200 > /dev/null)&
+    i=1
+    error=0
+    while [ $i -lt 60 ];do
+        printf "\r[%d...]" $i
+        pgrep $1 > /dev/null
+        if [ "$?" -ne 0 ];then
+            echo "\r\e[91m[+] Test #3 Failed\e[0m"
+            error_log $1 "Test #3" "Given 4 800 200 200 arguments to $1, no philosopher should die !"
+            error=1
+            break
+        fi
+        sleep 1
+        i=$(( $i + 1 ))
+    done
+    sleep 1
+    if [ $error -eq 0 ];then
+        pkill $1
+        echo "\r\e[92m[+] Test #3 Succeeded\e[0m"
+    fi
+}
 
 test_four ()
 {

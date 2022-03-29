@@ -31,10 +31,11 @@ typedef struct s_philos
 	pthread_mutex_t		eat_m;
 	pthread_mutex_t		live_m;
 	uint64_t			last_eat;
+	// int					is_dead;
+	int					run_flag;
 }						t_philos;
 
 struct					s_table {
-	int					run_flag;
 	int					error_type;
 	int					num_philo;
 	int					time_die;
@@ -47,6 +48,7 @@ struct					s_table {
 	pthread_mutex_t		*forks_m;
 	pthread_mutex_t		write_m;
 	pthread_mutex_t		end_m;
+	int					count;
 };
 
 //utils

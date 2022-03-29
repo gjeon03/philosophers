@@ -33,6 +33,8 @@ int	init_philos(t_table *table)
 	i = -1;
 	while (++i < table->num_philo)
 	{
+		// table->philos[i].run_flag = 0;
+		// table->philos[i].is_dead = 0;
 		table->philos[i].pos = i;
 		// table->philos[i].last_eat = get_time();
 		table->philos[i].is_eating = 0;
@@ -64,8 +66,9 @@ void	*eat_count(void *table_v)
 			table->is_dead = 1;
 			// usleep(100);
 			pthread_mutex_unlock(&table->end_m);
+			return(0);
 		}
-		// usleep(100);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -82,6 +85,7 @@ int	init_threads(t_table *table)
 			return (6);
 		pthread_detach(tid);
 	}
+	table->start = get_time();
 	while (++i < table->num_philo)
 	{
 		// table->philos[i].last_eat = table->start;
@@ -89,27 +93,26 @@ int	init_threads(t_table *table)
 		&make_actions, (void *)(table->philos + i)))
 			return (6);
 		pthread_detach(tid);
-
 		// if (table->philos[i].pos % 2 == 0)
-		// usleep(100);
+		usleep(100);
 
-		if (pthread_create(&tid, NULL, &dead, table->philos + i))
-			return (6);
-		pthread_detach(tid);
+		// if (pthread_create(&tid, NULL, &dead, table->philos + i))
+		// 	return (6);
+		// pthread_detach(tid);
 	}
-	table->start = get_time();
-	i = -1;
-	while (++i < table->num_philo)
-	{
-		table->philos[i].last_eat = table->start;
-	}
-	table->run_flag = 1;
+	// table->start = get_time();
+	// i = -1;
+	// while (++i < table->num_philo)
+	// {
+	// 	table->philos[i].last_eat = table->start;
+	// 	table->philos[i].run_flag = 1;
+	// 	usleep(100);
+	// }
 	return (0);
 }
 
 int	init(int argc, char *argv[], t_table *table)
 {
-	table->run_flag = 0;
 	table->forks_m = NULL;
 	table->philos = NULL;
 	table->num_philo = ft_atoi(argv[1]);

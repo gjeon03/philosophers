@@ -17,16 +17,11 @@ int	check_argv(t_table *table)
 
 void	msleep(uint64_t ms)
 {
-	uint64_t	begin;
-	uint64_t	end;
-
-	begin = get_time();
-	end = begin;
-	while (end - begin < ms)
-	{
-		usleep(10);
-		end = get_time();
-	}
+	uint64_t	start;
+	
+	start = get_time();
+	while (get_time() - start < ms)
+		usleep(100);
 }
 
 void	ft_putchar(char c)

@@ -17,6 +17,10 @@ void	ft_print(t_philos *philo, char *msg, int is_dead, char *color)
 		ft_putstr(color);
 		ft_putnbr(philo->pos + 1);
 		write(1, " ", 1);
+		write(1, "[", 1);
+		ft_putnbr(philo->eat_count + 1);
+		write(1, "]", 1);
+		write(1, " ", 1);
 		ft_putstr(msg);
 		ft_putstr(RESET);
 		if (is_dead)

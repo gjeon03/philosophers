@@ -1,3 +1,4 @@
 *.o
 venv
 LazyPhilosophersTester
+errors_log
