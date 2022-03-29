@@ -30,10 +30,11 @@ typedef struct s_philos
 	t_table				*table;
 	pthread_mutex_t		eat_m;
 	pthread_mutex_t		live_m;
-	unsigned long long	last_eat;
+	uint64_t			last_eat;
 }						t_philos;
 
 struct					s_table {
+	int					run_flag;
 	int					error_type;
 	int					num_philo;
 	int					time_die;
@@ -61,6 +62,7 @@ void				ft_putnbr(unsigned long long n);
 int					check_argv(t_table *table);
 
 //init
+void				*dead(void *philo_v);
 int					init_threads(t_table *table);
 int					init(int argc, char *argv[], t_table *table);
 

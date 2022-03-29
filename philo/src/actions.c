@@ -4,12 +4,12 @@ void	make_sleep(t_philos *philo)
 {
 	if (philo->table->is_dead)
 		return ;
-	ft_print(philo, "is sleeping\n", 0, CYAN);
 	pthread_mutex_unlock(&philo->table->forks_m[philo->fork_left]);
 	if (philo->table->is_dead)
 		return ;
 	pthread_mutex_unlock(&philo->table->forks_m[philo->fork_right]);
 	msleep(philo->table->time_sleep);
+	ft_print(philo, "is sleeping\n", 0, CYAN);
 }
 
 void	make_eat(t_philos *philo)
@@ -22,8 +22,9 @@ void	make_eat(t_philos *philo)
 	philo->eat_count++;
 	if (philo->table->is_dead)
 		return ;
-	// philo->last_eat = get_time();
+	philo->last_eat = get_time();
 	msleep(philo->table->time_eat);
+	// philo->last_eat = get_time();
 	if (philo->table->is_dead)
 		return ;
 	philo->is_eating = 0;
@@ -48,7 +49,8 @@ void	*dead(void *philo_v)
 	t_philos	*philo;
 
 	philo = (t_philos *)philo_v;
-	// usleep(100);
+	while (!philo->table->run_flag)
+		usleep(1);
 	while (1)
 	{
 		if (philo->table->is_dead)
@@ -61,7 +63,7 @@ void	*dead(void *philo_v)
 			pthread_mutex_unlock(&philo->table->end_m);
 			return (0);
 		}
-		// usleep(100);
+		usleep(100);
 	}
 	return (0);
 }
@@ -69,13 +71,20 @@ void	*dead(void *philo_v)
 void	*make_actions(void *philo_v)
 {
 	t_philos	*philo;
-	pthread_t	tid;
+	// pthread_t	tid;
 
 	philo = (t_philos *)philo_v;
-	philo->last_eat = philo->table->start;
-	if (pthread_create(&tid, NULL, &dead, philo_v))
-		return (NULL);
-	pthread_detach(tid);
+
+	while (!philo->table->run_flag)
+		usleep(1);
+	if (philo->pos % 2 == 1)
+		usleep(300);
+
+	// philo->last_eat = philo->table->start;
+	// if (pthread_create(&tid, NULL, &dead, philo_v))
+	// 	return (NULL);
+	// pthread_detach(tid);
+	// usleep(50);
 	while (1)
 	{
 		take_forks(philo);
